@@ -1,0 +1,9 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000" # puerto externo (host) : puerto interno (contenedor)
+    command: python manage.py runserver 0.0.0.0:8000
+  
+    volumes: # los voulumenes son una forma de persistir y compartir datos
+      - .:/code # Monta el directorio actual en /app dentro del contenedor
