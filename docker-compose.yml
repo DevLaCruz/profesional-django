@@ -1,3 +1,4 @@
+# Para poder acceder a la shell de cierto servicio es con docker compose exec -it nombre_servicio bash
 services:
   web:
     build: .
@@ -7,3 +8,33 @@ services:
   
     volumes: # los voulumenes son una forma de persistir y compartir datos
       - .:/code # Monta el directorio actual en /app dentro del contenedor
+
+
+# Para ingresar a la consola de la base de datos seria con docker compose exec -it db bash
+# Recordar que el comando psql en POstgreSQL se utiliza para conectarse a una base de datos en el cluster de PostgreSQL.
+# Permite interacturar con la base de datos, ejecutar sentencias SQL, administrar datos y realizar diversas tareas relacionad con la gestion de BD
+  db:
+    image: postgres:17
+    volumes:
+      # AQUÍ ESTABA EL ERROR: se necesita un espacio después del guion
+      - pg_data:/var/lib/postgresql/data/
+
+    # Recordar que para poder acceder 
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_DB=dj_proj_example_db
+
+# A nivel principal se define el volumen de datos, así se asegura que la data persista.
+# Esto NO debe llevar espacios a la izquierda (debe estar al mismo nivel que 'services:')
+# Para poder acceder a la shell de la db luego de hacer accedido al servicio en concreto, se hace con:
+# psql -h 127.0.0.1 -p 5432 -U postgres
+volumes:
+  pg_data:
+
+# luego para listar las bases de datos con \l, para acceder a alguna se hace con \c nombre_db, para ver contenido \dt
+# Para salir con \q y para luego acceder a comandos del usuario postgres se dee cambiar de usuario a postgre con: su postgres, despues ejecutar cmandos como pg_ctl status
+
+
+
+    
+  

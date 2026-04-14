@@ -1,3 +1,7 @@
+# El Dockerfile es el archivo que contiene las isntrucciones para construir una imagen
+# Imagen → lo que construyes
+# Contenedor → lo que ejecutas
+
 #Base image
 FROM python:3.13-slim
 
